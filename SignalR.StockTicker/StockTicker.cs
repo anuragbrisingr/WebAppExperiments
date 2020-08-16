@@ -43,7 +43,7 @@ namespace SignalR.StockTicker
         // This flag is designated as volatile to ensure thread safety.
         private volatile bool _updatingStockPrices = false;
 
-        public IHubConnectionContext<dynamic> Clients { get; set; }
+        private IHubConnectionContext<dynamic> Clients { get; set; }
 
         // In a Hub class there is an API fo calling client methods but this class doesn't.
         // Hence this class needs to get the SignalR context instance for the StockTickerHub class to call methods on clients.
@@ -90,6 +90,7 @@ namespace SignalR.StockTicker
                             BroadcastStockPrice(stock);
                         }
                     }
+                    _updatingStockPrices = false;
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace SignalR.StockTicker
     // Hubs are transient i.e., the app creates a Hub class instance for each task on the hub.
     // Hub class will handle receiving connections and calls from the client.
 
-    [HubName("stokTickerMini")]
+    [HubName("stockTickerMini")]
     public class StockTickerHub : Hub
     {
         private readonly StockTicker _stockTicker;

@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30011.22
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIOne", "APIOne\APIOne.csproj", "{B8311CB7-0043-4E5B-8EC6-C8D233170D5E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SignalR.StockTicker", "SignalR.StockTicker\SignalR.StockTicker.csproj", "{0A484867-C433-4CB1-A137-FDCF13CCF1A5}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8311CB7-0043-4E5B-8EC6-C8D233170D5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8311CB7-0043-4E5B-8EC6-C8D233170D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8311CB7-0043-4E5B-8EC6-C8D233170D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8311CB7-0043-4E5B-8EC6-C8D233170D5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A484867-C433-4CB1-A137-FDCF13CCF1A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A484867-C433-4CB1-A137-FDCF13CCF1A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A484867-C433-4CB1-A137-FDCF13CCF1A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A484867-C433-4CB1-A137-FDCF13CCF1A5}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9F999012-A467-4301-9CBF-6045FA182BA9}
+	EndGlobalSection
+EndGlobal

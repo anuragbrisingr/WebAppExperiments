@@ -66,7 +66,12 @@ namespace SignalR.StockTicker
             _timer = new Timer(UpdateStockPrices, null, _updateInterval, _updateInterval);
         }
 
-        // Mehtod first locks the _updateStockPricesLok object.
+        public IEnumerable<Stock> GetAllStocks()
+        {
+            return _stocks.Values;
+        }
+
+        // Method first locks the _updateStockPricesLok object.
         // Code checks if another thread is already updating prices.
         // Then TryUpdateStockPrice() is called on each _stock dictionary.
         private void UpdateStockPrices(object state)

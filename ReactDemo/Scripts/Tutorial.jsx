@@ -13,7 +13,20 @@ class CommentBox extends React.Component {
     // setState is used to set data in the variable on loading of data.
     // componentWillMount() executes immediately AND ONLY ONCE before rendering occurs.
     // So it is not possible to display data whenever we wish to refresh data.
-    componentWillMount() {
+    //componentWillMount() {
+    //    const xhr = new XMLHttpRequest();
+    //    xhr.open('get', this.props.url, true);
+    //    xhr.onload = () => {
+    //        const data = JSON.parse(xhr.responseText);
+    //        this.setState({ data: data });
+    //    };
+    //    xhr.send();
+    //}
+    // ***********************_______________******************______________________**************************
+    // To overcome the problem stated above, componentDidMount() is used and
+    // a method is called at regular intervals from within componentDidMount() to check
+    // for data change/updation within the server.
+    loadCommentsFromServer() {
         const xhr = new XMLHttpRequest();
         xhr.open('get', this.props.url, true);
         xhr.onload = () => {
@@ -21,6 +34,13 @@ class CommentBox extends React.Component {
             this.setState({ data: data });
         };
         xhr.send();
+    }
+    componentDidMount() {
+        this.loadCommentsFromServer();
+        window.setInterval(
+            () => this.loadCommentsFromServer(),
+            this.props.shootRequestInterval
+        );
     }
     render() {
         return (
@@ -72,4 +92,4 @@ class Comment extends React.Component {
     }
 }
 
-ReactDOM.render(<CommentBox url="/comments" />, document.getElementById('content'));
+ReactDOM.render(<CommentBox url="/comments" shootRequestInterval={ 5000} />, document.getElementById('content'));

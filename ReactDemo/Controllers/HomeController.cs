@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Web.UI;
 
 namespace ReactDemo.Controllers
 {
@@ -34,10 +35,16 @@ namespace ReactDemo.Controllers
             };
         }
 
-        // GET: Home
         public ActionResult Index()
         {
             return View();
+        }
+
+        // OutputCache attribute is used to prevent browsers from Caching the response.
+        [OutputCache(Location = OutputCacheLocation.None)]
+        public ActionResult Comments()
+        {
+            return Json(_comments, JsonRequestBehavior.AllowGet);
         }
     }
 }

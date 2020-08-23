@@ -1,15 +1,32 @@
-﻿const data = [
-    { Id: 1, Author: 'Rama Krishna', Text: 'Namaste! React world, this is Rama Krishna.'},
-    { Id: 2, Author: 'Raghu Ram', Text: 'Comment by Raghu.' },
-    { Id: 3, Author: 'Arjuna Veera', Text: 'Comment.'}
-];
+﻿//const data = [
+//    { Id: 1, Author: 'Rama Krishna', Text: 'Namaste! React world, this is Rama Krishna.'},
+//    { Id: 2, Author: 'Raghu Ram', Text: 'Comment by Raghu.' },
+//    { Id: 3, Author: 'Arjuna Veera', Text: 'Comment.'}
+//];
 
 class CommentBox extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = { data: [] };
+    }
+    // XMLHttpRequest API to retrieve data from server.
+    // setState is used to set data in the variable on loading of data.
+    // componentWillMount() executes immediately AND ONLY ONCE before rendering occurs.
+    // So it is not possible to display data whenever we wish to refresh data.
+    componentWillMount() {
+        const xhr = new XMLHttpRequest();
+        xhr.open('get', this.props.url, true);
+        xhr.onload = () => {
+            const data = JSON.parse(xhr.responseText);
+            this.setState({ data: data });
+        };
+        xhr.send();
+    }
     render() {
         return (
             <div className="commentBox">Namaste! I'm a comment Box.
                 <h1>Comments</h1>
-                <CommentList data={this.props.data} />
+                <CommentList data={this.state.data} />
                 <CommentForm />
             </div>
             );
@@ -55,4 +72,4 @@ class Comment extends React.Component {
     }
 }
 
-ReactDOM.render(<CommentBox data={data} />, document.getElementById('content'));
+ReactDOM.render(<CommentBox url="/comments" />, document.getElementById('content'));

@@ -10,9 +10,15 @@ namespace ReactDemo
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "NewComment",
+                url: "comments/new",
+                defaults: new { controller = "Home", action = "AddComment"}
+                );
+
+            routes.MapRoute(
                 name: "Comments",
                 url: "comments",
-                defaults: new { Controller = "Home", action = "Comments"}
+                defaults: new { controller = "Home", action = "Comments"}
                 );
 
             routes.MapRoute(

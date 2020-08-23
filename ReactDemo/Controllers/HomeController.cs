@@ -46,5 +46,13 @@ namespace ReactDemo.Controllers
         {
             return Json(_comments, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult AddComment(CommentModel comment)
+        {
+            comment.Id = _comments.Count + 1;
+            _comments.Add(comment);
+            return Content("Comment Added !!");
+        }
     }
 }

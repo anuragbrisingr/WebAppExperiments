@@ -11,20 +11,25 @@ namespace SignalR.StockTicker
     // Hence each StockTickerHub instance must have a reference of this class's Singleton instance.
     // This class has to broadcast all stock data to clients as the data is held in this class.
     // Since ths isn't a Hub class it has to get a reference to SignalR Hub connection context object to broadcas.
-    public class StockTicker
+    public class StockTicker : IStockTicker
     {
+        #region Lazy loading and Singleton instance Commented Code.
+
         // Singleton instance.
         // Lazy Initialization is not for performance here but to ensure instance-creation is thread safe.
-        private readonly static Lazy<StockTicker> _instance = new Lazy<StockTicker>(() =>
-                new StockTicker(GlobalHost.ConnectionManager.GetHubContext<StockTickerHub>().Clients));
+        // Commented to implement Dependency Injection and IOC.
+        //private readonly static Lazy<StockTicker> _instance = new Lazy<StockTicker>(() =>
+        //        new StockTicker(GlobalHost.ConnectionManager.GetHubContext<StockTickerHub>().Clients));
 
-        public static StockTicker Instance 
-        { 
-            get
-            {
-                return _instance.Value;
-            }
-        }
+        //public static StockTicker Instance 
+        //{ 
+        //    get
+        //    {
+        //        return _instance.Value;
+        //    }
+        //}
+
+        #endregion
 
         // Stocks collection is defined as a ConcurrentDictionary for thread safety.
         // Alternatively it could be defined as a Dictionary explicitly locked when changes are made on the same.
@@ -47,7 +52,7 @@ namespace SignalR.StockTicker
 
         // In a Hub class there is an API fo calling client methods but this class doesn't.
         // Hence this class needs to get the SignalR context instance for the StockTickerHub class to call methods on clients.
-        private StockTicker(IHubConnectionContext<dynamic> clients)
+        public StockTicker(IHubConnectionContext<dynamic> clients)
         {
             Clients = clients;
 
@@ -76,15 +81,15 @@ namespace SignalR.StockTicker
         // Then TryUpdateStockPrice() is called on each _stock dictionary.
         private void UpdateStockPrices(object state)
         {
-            lock(_updateStockPricesLock)
+            lock (_updateStockPricesLock)
             {
-                if(!_updatingStockPrices)
+                if (!_updatingStockPrices)
                 {
                     _updatingStockPrices = true;
 
-                    foreach(var stock in _stocks.Values)
+                    foreach (var stock in _stocks.Values)
                     {
-                        if(TryUpdateStockPrice(stock))
+                        if (TryUpdateStockPrice(stock))
                         {
                             // Invoking method that broadcasts stock price changes.
                             BroadcastStockPrice(stock);
@@ -98,7 +103,7 @@ namespace SignalR.StockTicker
         private bool TryUpdateStockPrice(Stock stock)
         {
             var r = _updateOrNotRandom.NextDouble();
-            if(r > .1)
+            if (r > .1)
             {
                 return false;
             }

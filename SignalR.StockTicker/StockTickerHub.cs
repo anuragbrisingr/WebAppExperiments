@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 
@@ -10,13 +11,22 @@ namespace SignalR.StockTicker
     [HubName("stockTickerMini")]
     public class StockTickerHub : Hub
     {
-        private readonly StockTicker _stockTicker;
+        private readonly IStockTicker _stockTicker;
+
+        #region Commented Stock Ticker Old implementation.
 
         // SignalR requires by default a parameterless constructor for the hub class.
-        public StockTickerHub() : this(StockTicker.Instance){}
+        // Commented in order to implement Dependency Injection.
+        //public StockTickerHub() : this(StockTicker.Instance){}
 
-        public StockTickerHub(StockTicker stockTicker)
+        #endregion
+
+        public StockTickerHub(IStockTicker stockTicker)
         {
+            if(stockTicker == null)
+            {
+                throw new ArgumentNullException("stockTicker");
+            }
             _stockTicker = stockTicker;
         }
 

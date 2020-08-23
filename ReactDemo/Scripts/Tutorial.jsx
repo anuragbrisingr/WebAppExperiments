@@ -8,6 +8,7 @@ class CommentBox extends React.Component {
     constructor(props) {
         super(props);
         this.state = { data: [] };
+        this.handleCommentSubmit = this.handleCommentSubmit.bind(this);
     }
     // XMLHttpRequest API to retrieve data from server.
     // setState is used to set data in the variable on loading of data.
@@ -35,6 +36,17 @@ class CommentBox extends React.Component {
         };
         xhr.send();
     }
+    //Submit to the server and refresh the comments list.
+    handleCommentSubmit(comment) {
+        const data = new FormData();
+        data.append('Author', comment.Author);
+        data.append('Text', comment.Text);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('post', this.props.submitURL, true);
+        xhr.onload = () => this.loadCommentsFromServer();
+        xhr.send(data);
+    }
     componentDidMount() {
         this.loadCommentsFromServer();
         window.setInterval(
@@ -47,7 +59,7 @@ class CommentBox extends React.Component {
             <div className="commentBox">Namaste! I'm a comment Box.
                 <h1>Comments</h1>
                 <CommentList data={this.state.data} />
-                <CommentForm />
+                <CommentForm onCommentSubmit={this.handleCommentSubmit} />
             </div>
             );
     }
@@ -89,6 +101,7 @@ class CommentForm extends React.Component {
         if (!text || !author) {
             return;
         }
+        this.props.onCommentSubmit({ Author: author, Text: text });
         this.setState({ author: '', text: '' });
     }
     render() {
@@ -118,4 +131,4 @@ class Comment extends React.Component {
     }
 }
 
-ReactDOM.render(<CommentBox url={commentAPIURL} shootRequestInterval={5000} />, document.getElementById('content'));
+ReactDOM.render(<CommentBox url={commentAPIURL} submitURL={submitCommentURL} shootRequestInterval={5000} />, document.getElementById('content'));

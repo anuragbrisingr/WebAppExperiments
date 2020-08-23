@@ -92,4 +92,4 @@ class Comment extends React.Component {
     }
 }
 
-ReactDOM.render(<CommentBox url="/comments" shootRequestInterval={ 5000} />, document.getElementById('content'));
+ReactDOM.render(<CommentBox url={commentAPIURL} shootRequestInterval={5000} />, document.getElementById('content'));

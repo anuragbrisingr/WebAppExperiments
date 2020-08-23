@@ -83,12 +83,17 @@ class CommentForm extends React.Component {
         this.setState({ text: e.target.value });
     }
     handlePost(e) {
-        alert(this.state.author);
         e.preventDefault();
+        const author = this.state.author.trim();
+        const text = this.state.text.trim();
+        if (!text || !author) {
+            return;
+        }
+        this.setState({ author: '', text: '' });
     }
     render() {
         return (
-            <form className="commentForm">
+            <form className="commentForm" onSubmit={this.handlePost} >
                 <input type="text" placeholder="Your name" value={this.state.author} onChange={this.handleAuthorChange} />
                 <input type="text" placeholder="What's your opinion?" value={this.state.text} onChange={this.handleTextChange} />
                 <input type="submit" value="Post" />
